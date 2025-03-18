@@ -1,6 +1,10 @@
 from typing import List
-from fastapi import FastAPI
-from services import read
+from fastapi import FastAPI, Depends
+from services import read, user
+from sqlmodel import SQLModel, create_engine, Session, select
+from dotenv import load_dotenv
+from models import User
+import os
 
 app = FastAPI()
 
@@ -9,11 +13,7 @@ async def read_root():
     result = read.registre()
     return result
 
-from fastapi import Depends
-from sqlmodel import SQLModel, create_engine, Session
-from dotenv import load_dotenv
-from services import user
-import os
+
 
 load_dotenv()
 
@@ -36,24 +36,31 @@ def read_user(db:Session = Depends(get_db)):
     result = user.get_all_users(db)
     return result
 
-
-from schema.users_sch import users_schema
-from sqlmodel import Session, select
-from models.User import User
-
-def get_all_users(db:Session):
-    sql_read = select(User)
-    users = db.exec(sql_read).all()
-    return users_schema(users)
-
 @app.post("/users/", response_model=dict)
 def create_user(name: str, email:str, db:Session = Depends(get_db)):
     result = user.add_new_user(name, email, db)
     return result
 
-def add_new_user(name: str, email:str, db:Session):
-    db_user = User(name=name, email=email)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return {"Created user succesfully"}
+@app.put("/users/{user_id}")
+async def update_user(user_id: int, new_name: str, session: Session = Depends(get_session)):
+    statement = select(User).where(User.id == user_id)
+    user = session.exec(statement).one_or_none()
+    if user is None:
+        return {"error": "User not found"}
+
+    user.name = new_name
+    session.add(user)
+    session.commit()
+    return {"message": "User updated", "user": user}
+
+@app.delete("/users/{user_id}")
+async def delete_user(user_id: int, session: Session = Depends(get_db)):
+    statement = select(User).where(User.id == user_id)
+    user = session.exec(statement).one_or_none()
+    if user is None:
+        return {"error": "User not found"}
+
+    session.delete(user)
+    session.commit()
+    return {"message": "User deleted"}
+
