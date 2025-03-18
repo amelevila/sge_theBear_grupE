@@ -42,7 +42,7 @@ def create_user(name: str, email:str, db:Session = Depends(get_db)):
     return result
 
 @app.put("/users/{user_id}")
-async def update_user(user_id: int, new_name: str, session: Session = Depends(get_session)):
+async def update_user(user_id: int, new_name: str, session: Session = Depends(get_db)):
     statement = select(User).where(User.id == user_id)
     user = session.exec(statement).one_or_none()
     if user is None:
