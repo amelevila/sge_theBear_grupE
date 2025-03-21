@@ -35,6 +35,8 @@ Finalment, a la següent captura es pot veure com tot funciona correctament util
 ![alttext](img/imatge_comprovacio.png "Comprovació")
 
 ## FASTAPI + BD
+
+### PAS A PAS
 Per començar amb el projecte, s'ha creat un fitxer amb el nom "requirements.txt" amb els noms del requeriments que s'instal·laran a continuació amb la comanda "pip install -r requirements.txt".
 
 ![alttext](img/Requirements.png "Requirements")
@@ -69,6 +71,34 @@ Finalment es crea l'arxiu users_sch amb 2 funcions per consultar a la BD en un f
 
 ![alttext](img/users_sch.png "users_sch")
 
+### Comprovació
+
 Un cop acabat, es fa la comprovació novament amb la comanda "uvicorn main:app --reload"
 
 ![alttext](img/uvicornBD.png "uvicorn BD")
+
+## CRUD
+En aquesta activitat es faràn consultes a la Base de Dades CRUD (Create, Read, Update i Delete), a l'activitat anterior s'ha fet Create i Read i per tant ara es faran les 2 restants començant per Update.
+
+### PAS A PAS
+Per fer la consulta Update es comença definint l'endpoint a main.py amb el decorador @app.put(). En aquest cas es que s'actualitzarà serà l'email de l'usuari.
+
+També es crearà una funció async def que trucarà al mètode de la funció user per passar l'usuari que es vol modificar utilitzant el seu id (uid) i el nom email (email) com a paràmetres.
+
+![alttext](img/endpoint_update.png "endpoint update")
+
+Aquesta funció es troba a "services/user.py" i troba l'usuari que tingui el mateix id que el parametre passat i actualitza l'email d'aquest. Al final es retorna que s'ha actualitzat l'email correctament.
+
+![alttext](img/funcio_update.png "funció update")
+
+La segona i ultima consulta s'ha fet el el Delete i es fà de la mateixa forma que l'update, amb un endpoint a main.py que crida una funció de user.py.
+
+![alttext](img/endpoint_delete.png "endpoint delete")
+
+![alttext](img/funcio_delete.png "funció delete")
+
+### Comprovació
+
+Per comprovar que els canvis s'han fet correctament, es torna a executar la comanda "uvicorn main:app --reload".
+
+![alttext](img/uvicorn_CRUD.png "uvicorn CRUD")
