@@ -102,3 +102,7 @@ La segona i ultima consulta s'ha fet el el Delete i es fà de la mateixa forma q
 Per comprovar que els canvis s'han fet correctament, es torna a executar la comanda "uvicorn main:app --reload".
 
 ![alttext](img/uvicorn_CRUD.png "uvicorn CRUD")
+
+També es pot veure el resultat la pàgina a localhost:8000 a través de SWAGGER a la seguent captura 
+
+![alt text](img/swagger.png "comprovació swagger")
