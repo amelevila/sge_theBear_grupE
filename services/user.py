@@ -13,3 +13,20 @@ def add_new_user(name: str, email: str, db: Session):
     db.commit()
     db.refresh(db_user)
     return {"Created user succesfully"}
+
+def update_user(id:int, name:str, db:Session):
+    sq_select = select(User).where(User.id == id)
+    user_db = db.exec(sql_select).one()
+
+    user_db.name = name
+    db.add(user_db)
+    db.commit()
+    return {"msg":"Updated user succesfully"}
+
+def delete_user(id:int, db:Session):
+    sql_select = select(User).where(User.id == id)
+    user_db = db.exec(sql_select).one()
+
+    db.delete(user_db)
+    db.commit()
+    return {"msg":"Delete user succesfully"}
