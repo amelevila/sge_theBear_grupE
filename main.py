@@ -37,12 +37,17 @@ def create_user(name: str, email:str, db:Session = Depends(get_db)):
     result = user.add_new_user(name, email, db)
     return result
 
-@app.put("/users/", response_model=list[dict])
-async def update_email(uid: int, email: str, db:Session = Depends(get_db)):
-    result = user.update_user_email(uid, email, db)
+@app.put("/update_user/", response_model=dict)
+async def update_user(id:int, name:str, db:Session = Depends(get_db)):
+    result = user.update_user(id, name, db)
     return result
 
-@app.delete("/users/", response_model=list[dict])
-async def del_user(uid: int, db:Session = Depends(get_db)):
-    result = user.delete_user(uid, db)
+@app.put("/users/", response_model=dict)
+async def update_email(id: int, email: str, db:Session = Depends(get_db)):
+    result = user.update_user_email(id, email, db)
+    return result
+
+@app.delete("/users/delete/", response_model=dict)
+async def delete_user(id: int, db:Session = Depends(get_db)):
+    result = user.delete_user(id, db)
     return result
