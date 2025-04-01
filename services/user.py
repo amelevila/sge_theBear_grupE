@@ -19,6 +19,7 @@ def update_user_email(uid: int, email:str, db:Session):
     results = db.exec(statement)
     user = results.one()
     user.email = email
+    db.add(user)
     db.commit()
     return {"Email updated successfully"}
 
