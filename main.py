@@ -42,7 +42,7 @@ async def update_email(uid: int, email: str, db:Session = Depends(get_db)):
     result = user.update_user_email(uid, email, db)
     return result
 
-@app.delete("/users/", response_model=list[dict])
+@app.delete("/user/delete/", response_model=dict)
 async def del_user(uid: int, db:Session = Depends(get_db)):
     result = user.delete_user(uid, db)
     return result
