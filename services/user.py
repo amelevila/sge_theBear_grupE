@@ -14,15 +14,27 @@ def add_new_user(name: str, email:str, db:Session):
     db.refresh(db_user)
     return {"Created user succesfully"}
 
-def update_heroes():
-    with Session(engine) as session:
-        satatement = select(Hero).where(Hero.name == "Spider-Boy")
-        results = session.exec(statement)
-        hero = results.one()
-        print("Hero:", hero)
+def update_user(id:int, name:str, db:Session):
+    sql_select = select(User).where(User.id == id)
+    user_db = db.exec(sql_select).one()
 
-        hero.age = 16
-        session.add(hero)
-        session.commit()
-        print("Updated hero:", hero)
-        return {"Created user succesfully"}
+    user_db.name = name
+    db.add(user_db)
+    db.commit()
+    return {"msg":"Updated user successfully"}
+
+def update_user_email(id: int, email:str, db:Session):
+    statement = select(User).where(User.id == id)
+    results = db.exec(statement)
+    user = results.one()
+    user.email = email
+    db.commit()
+    return {"Email updated successfully"}
+
+def delete_user(id: int, db:Session):
+    sql_select = select(User).where(User.id == id)
+    user_db = db.exec(sql_select).one()
+
+    db.delete(user_db)
+    db.commit()
+    return {"User deleted successfully"}

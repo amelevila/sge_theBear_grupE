@@ -1,9 +1,8 @@
 from typing import List
 from fastapi import FastAPI, Depends
-from services import read, user
 from sqlmodel import SQLModel, create_engine, Session, select
 from dotenv import load_dotenv
-from models import User
+from services import read, user
 import os
 
 app = FastAPI()
@@ -41,26 +40,18 @@ def create_user(name: str, email:str, db:Session = Depends(get_db)):
     result = user.add_new_user(name, email, db)
     return result
 
-@app.put("/users/{user_id}")
-async def update_user(user_id: int, new_name: str, session: Session = Depends(get_db)):
-    statement = select(User).where(User.id == user_id)
-    user = session.exec(statement).one_or_none()
-    if user is None:
-        return {"error": "User not found"}
+@app.put("/update_user/", response_model=dict)
+async def update_user(id:int, name:str, db:Session = Depends(get_db)):
+    result = user.update_user(id, name, db)
+    return result
 
-    user.name = new_name
-    session.add(user)
-    session.commit()
-    return {"message": "User updated", "user": user}
+@app.put("/users/", response_model=dict)
+async def update_email(id: int, email: str, db:Session = Depends(get_db)):
+    result = user.update_user_email(id, email, db)
+    return result
 
-@app.delete("/users/{user_id}")
-async def delete_user(user_id: int, session: Session = Depends(get_db)):
-    statement = select(User).where(User.id == user_id)
-    user = session.exec(statement).one_or_none()
-    if user is None:
-        return {"error": "User not found"}
-
-    session.delete(user)
-    session.commit()
-    return {"message": "User deleted"}
+@app.delete("/users/delete/", response_model=dict)
+async def delete_user(id: int, db:Session = Depends(get_db)):
+    result = user.delete_user(id, db)
+    return result
 

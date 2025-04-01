@@ -11,3 +11,13 @@ RESULTAT ACTIVITAT FASTAPI + BD:
 ![img_8.png](img_8.png)
 ESTRUCTURA FINAL:
 ![img_9.png](img_9.png)
+![img_10.png](img_10.png)
+Este proyecto implementa una API REST utilizando FastAPI para la gestión de usuarios. Se incluyen endpoints para:
+
+Obtener datos → GET /root, GET /users/
+
+Crear un usuario → POST /users/
+
+Actualizar datos de usuario → PUT /users/ y PUT /update_user/
+
+Eliminar un usuario → DELETE /users/delete/
