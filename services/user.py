@@ -7,26 +7,25 @@ def get_all_users(db:Session):
     users = db.exec(sql_read).all()
     return users_schema(users)
 
-def add_new_user(name: str, email: str, db: Session):
+def  add_new_user(name: str, email:str, db:Session):
     db_user = User(name=name, email=email)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
-    return {"Created user succesfully"}
+    return {"Created user successfully"}
 
-def update_user(id:int, name:str, db:Session):
-    sq_select = select(User).where(User.id == id)
-    user_db = db.exec(sql_select).one()
-
-    user_db.name = name
-    db.add(user_db)
+def update_user_email(uid: int, email:str, db:Session):
+    statement = select(User).where(User.id == uid)
+    results = db.exec(statement)
+    user = results.one()
+    user.email = email
     db.commit()
-    return {"msg":"Updated user succesfully"}
+    return {"Email updated successfully"}
 
-def delete_user(id:int, db:Session):
-    sql_select = select(User).where(User.id == id)
-    user_db = db.exec(sql_select).one()
-
-    db.delete(user_db)
+def delete_user(uid: int, db:Session):
+    statement = select(User).where(User.id == uid)
+    results = db.exec(statement)
+    user = results.one()
+    db.delete(user)
     db.commit()
-    return {"msg":"Delete user succesfully"}
+    return {"User deleted successfully"}
