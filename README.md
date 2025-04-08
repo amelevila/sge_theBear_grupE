@@ -105,4 +105,26 @@ Per comprovar que els canvis s'han fet correctament, es torna a executar la coma
 
 També es pot veure el resultat la pàgina a localhost:8000 a través de SWAGGER a la seguent captura 
 
-![alt text](img/swagger.png "comprovació swagger")
+![alttext](img/swagger.png "comprovació swagger")
+
+A la següent captura es veu com read users funciona correctament. Ara mateix no hi ha cap usuari creat.
+![alttext](img/comprovacio_read.png)
+
+A la següent captura es veu com create user funciona correctament.
+![alttext](img/comprovacio_create.png)
+
+Un cop fet el create, fent un altre read es pot veure com s'ha creat un usuari correctament.
+![alttext](img/comprovacio_create_read.png)
+
+A la següent captura es veu com update user funciona correctament.
+![alttext](img/comprovacio_update.png)
+
+Un cop fet el update, fent un altre read es pot veure com s'ha actualitzat l'email de l'usuari correctament.
+![alttext](img/comprovacio_update_read.png)
+
+A la següent captura es veu com delete user funciona correctament.
+![alttext](img/comprovacio_delete.png)
+
+Un cop fet el delete, fent un altre read es pot veure com s'ha esborrat l'usuari correctament i no hi ha cap usuari un altre cop.
+![alttext](img/comprovacio_delete_read.png)
+
