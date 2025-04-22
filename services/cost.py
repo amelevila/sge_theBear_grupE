@@ -8,7 +8,7 @@ def llegir_costos(db:Session):
     costos = db.exec(sql_read).all()
     return costos_schema(costos)
 
-def  afegir_cost(nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session):
+def afegir_cost(nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session):
     db_cost = Cost(nom_client=nom_client, comercial=comercial, venciment=venciment, nom_producte=nom_producte)
     db.add(db_cost)
     db.commit()
