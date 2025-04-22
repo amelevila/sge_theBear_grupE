@@ -14,7 +14,7 @@ def  afegir_client(nom: str, email: str, residencia: str, db:Session):
     db.refresh(db_client)
     return {"Client creat exitosament"}
 
-def update_client_comercial(nom: str, email: str, db:Session):
+def update_client_email(nom: str, email: str, db:Session):
     statement = select(Client).where(Client.nom == nom)
     results = db.exec(statement)
     client = results.one()
