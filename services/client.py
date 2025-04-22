@@ -23,8 +23,8 @@ def update_client_email(nom: str, email: str, db:Session):
     db.commit()
     return {"Email actualitzat exitosament"}
 
-def delete_client(numero: int, db:Session):
-    statement = select(Client).where(Client.numero == numero)
+def delete_client(nom: str, db:Session):
+    statement = select(Client).where(Client.nom == nom)
     results = db.exec(statement)
     client = results.one()
     db.delete(client)
