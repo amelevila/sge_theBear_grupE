@@ -7,7 +7,7 @@ def llegir_productes(db:Session):
     producte = db.exec(sql_read).all()
     return productes_schema(producte)
 
-def  afegir_producte(nom: str, preu: int, valoracio: int, db:Session):
+def afegir_producte(nom: str, preu: int, valoracio: int, db:Session):
     db_producte = Producte(nom=nom, preu=preu, valoracio=valoracio)
     db.add(db_producte)
     db.commit()

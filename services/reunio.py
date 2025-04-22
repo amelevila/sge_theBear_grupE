@@ -8,7 +8,7 @@ def llegir_reunions(db:Session):
     reunio = db.exec(sql_read).all()
     return reunions_schema(reunio)
 
-def  afegir_reunio(assumpte: str, organitzador: str, privacitat: str, data_inici: date, duracio: int, ubicacio: str, url: str, descripcio: str, db:Session):
+def afegir_reunio(assumpte: str, organitzador: str, privacitat: str, data_inici: date, duracio: int, ubicacio: str, url: str, descripcio: str, db:Session):
     db_reunio = Reunio(assumpte=assumpte, organitzador=organitzador, privacitat=privacitat, data_inici=data_inici, duracio=duracio, ubicacio=ubicacio, url=url, descripcio=descripcio)
     db.add(db_reunio)
     db.commit()

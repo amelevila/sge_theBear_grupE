@@ -7,7 +7,7 @@ def llegir_clients(db:Session):
     client = db.exec(sql_read).all()
     return clients_schema(client)
 
-def  afegir_client(nom: str, email: str, residencia: str, db:Session):
+def afegir_client(nom: str, email: str, residencia: str, db:Session):
     db_client = Client(nom=nom, email=email, residencia=residencia)
     db.add(db_client)
     db.commit()
