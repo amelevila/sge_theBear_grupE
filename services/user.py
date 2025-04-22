@@ -14,19 +14,11 @@ def  add_new_user(name: str, email:str, db:Session):
     db.refresh(db_user)
     return {"Created user successfully"}
 
-def update_user_email(uid: int, email:str, db:Session):
-    statement = select(User).where(User.id == uid)
     results = db.exec(statement)
     user = results.one()
     user.email = email
-    db.add(user)
     db.commit()
     return {"Email updated successfully"}
 
-def delete_user(uid: int, db:Session):
-    statement = select(User).where(User.id == uid)
-    results = db.exec(statement)
-    user = results.one()
-    db.delete(user)
     db.commit()
     return {"User deleted successfully"}

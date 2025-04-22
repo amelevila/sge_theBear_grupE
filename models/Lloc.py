@@ -1,6 +1,7 @@
 from sqlmodel import SQLModel, Field
 
-class User(SQLModel, table=True):
+class Lloc(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
-    name: str
-    email: str
+    num_taula: int
+    lliure: bool
+

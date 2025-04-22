@@ -1,5 +1,5 @@
-from sqlmodel import SQLModel, Field
 from datetime import date
+from sqlmodel import SQLModel, Field
 
 class Cost(SQLModel, table=True):
     numero: int = Field(default=None, primary_key=True)
