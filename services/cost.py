@@ -19,7 +19,7 @@ def update_cost_comercial(numero: int, comercial: str, db:Session):
     statement = select(Cost).where(Cost.numero == numero)
     results = db.exec(statement)
     cost = results.one()
-    cost.numero = numero
+    cost.comercial = comercial
     db.add(cost)
     db.commit()
     return {"Comercial actualitzat exitosament"}
