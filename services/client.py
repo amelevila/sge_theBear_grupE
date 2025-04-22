@@ -14,14 +14,14 @@ def  afegir_client(nom: str, email: str, residencia: str, db:Session):
     db.refresh(db_client)
     return {"Client creat exitosament"}
 
-def update_client_comercial(nom: str, comercial: str, db:Session):
+def update_client_comercial(nom: str, email: str, db:Session):
     statement = select(Client).where(Client.nom == nom)
     results = db.exec(statement)
     client = results.one()
-    client.nom = nom
+    client.email = email
     db.add(client)
     db.commit()
-    return {"Comercial actualitzat exitosament"}
+    return {"Email actualitzat exitosament"}
 
 def delete_client(numero: int, db:Session):
     statement = select(Client).where(Client.numero == numero)
