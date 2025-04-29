@@ -8,12 +8,12 @@ def llegir_costos(db:Session):
     costos = db.exec(sql_read).all()
     return costos_schema(costos)
 
-def  afegir_cost(nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session):
+def afegir_cost(nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session):
     db_cost = Cost(nom_client=nom_client, comercial=comercial, venciment=venciment, nom_producte=nom_producte)
     db.add(db_cost)
     db.commit()
     db.refresh(db_cost)
-    return {"Cost creat exitosament"}
+    return {"msg":"Cost creat exitosament"}
 
 def update_cost_comercial(numero: int, comercial: str, db:Session):
     statement = select(Cost).where(Cost.numero == numero)
@@ -22,7 +22,7 @@ def update_cost_comercial(numero: int, comercial: str, db:Session):
     cost.comercial = comercial
     db.add(cost)
     db.commit()
-    return {"Comercial actualitzat exitosament"}
+    return {"msg":"Comercial actualitzat exitosament"}
 
 def delete_cost(numero: int, db:Session):
     statement = select(Cost).where(Cost.numero == numero)
@@ -30,4 +30,4 @@ def delete_cost(numero: int, db:Session):
     cost = results.one()
     db.delete(cost)
     db.commit()
-    return {"Cost eliminat exitosament"}
+    return {"msg":"Cost eliminat exitosament"}

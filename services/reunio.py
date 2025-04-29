@@ -8,12 +8,12 @@ def llegir_reunions(db:Session):
     reunio = db.exec(sql_read).all()
     return reunions_schema(reunio)
 
-def  afegir_reunio(assumpte: str, organitzador: str, privacitat: str, data_inici: date, duracio: int, ubicacio: str, url: str, descripcio: str, db:Session):
+def afegir_reunio(assumpte: str, organitzador: str, privacitat: str, data_inici: date, duracio: int, ubicacio: str, url: str, descripcio: str, db:Session):
     db_reunio = Reunio(assumpte=assumpte, organitzador=organitzador, privacitat=privacitat, data_inici=data_inici, duracio=duracio, ubicacio=ubicacio, url=url, descripcio=descripcio)
     db.add(db_reunio)
     db.commit()
     db.refresh(db_reunio)
-    return {"Reunio creada exitosament"}
+    return {"msg":"Reunio creada exitosament"}
 
 def update_reunio_duracio(assumpte: str, duracio: int, db:Session):
     statement = select(Reunio).where(Reunio.assumpte == assumpte)
@@ -22,7 +22,7 @@ def update_reunio_duracio(assumpte: str, duracio: int, db:Session):
     reunio.duracio = duracio
     db.add(reunio)
     db.commit()
-    return {"Duració actualitzada exitosament"}
+    return {"msg":"Duració actualitzada exitosament"}
 
 def delete_reunio(assumpte: str, db:Session):
     statement = select(Reunio).where(Reunio.assumpte == assumpte)
@@ -30,4 +30,4 @@ def delete_reunio(assumpte: str, db:Session):
     reunio = results.one()
     db.delete(reunio)
     db.commit()
-    return {"Reunio eliminat exitosament"}
+    return {"msg":"Reunio eliminat exitosament"}
