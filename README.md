@@ -21,3 +21,9 @@ Crear un usuario → POST /users/
 Actualizar datos de usuario → PUT /users/ y PUT /update_user/
 
 Eliminar un usuario → DELETE /users/delete/
+
+![img_11.png](img_11.png)
+He fet l'apartat de models dels apartats que em tocaven a mi amb aquesta estructura 
+
+![img_12.png](img_12.png)
+Això es l'apartat de Schema, el qual ho he fet amb aquesta estructura per a tots els apartats que em tocaven
