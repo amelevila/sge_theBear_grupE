@@ -13,7 +13,7 @@ def afegir_reunio(assumpte: str, organitzador: str, privacitat: str, data_inici:
     db.add(db_reunio)
     db.commit()
     db.refresh(db_reunio)
-    return {"Reunio creada exitosament"}
+    return {"msg":"Reunio creada exitosament"}
 
 def update_reunio_duracio(assumpte: str, duracio: int, db:Session):
     statement = select(Reunio).where(Reunio.assumpte == assumpte)
@@ -22,7 +22,7 @@ def update_reunio_duracio(assumpte: str, duracio: int, db:Session):
     reunio.duracio = duracio
     db.add(reunio)
     db.commit()
-    return {"Duració actualitzada exitosament"}
+    return {"msg":"Duració actualitzada exitosament"}
 
 def delete_reunio(assumpte: str, db:Session):
     statement = select(Reunio).where(Reunio.assumpte == assumpte)
@@ -30,4 +30,4 @@ def delete_reunio(assumpte: str, db:Session):
     reunio = results.one()
     db.delete(reunio)
     db.commit()
-    return {"Reunio eliminat exitosament"}
+    return {"msg":"Reunio eliminat exitosament"}

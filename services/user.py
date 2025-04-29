@@ -12,7 +12,7 @@ def add_new_user(name: str, email:str, db:Session):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
-    return {"Created user successfully"}
+    return {"msg":"Created user successfully"}
 
 def update_user_email(uid: int, email:str, db:Session):
     statement = select(User).where(User.id == uid)
@@ -21,7 +21,7 @@ def update_user_email(uid: int, email:str, db:Session):
     user.email = email
     db.add(user)
     db.commit()
-    return {"Email updated successfully"}
+    return {"msg":"Email updated successfully"}
 
 def delete_user(uid: int, db:Session):
     statement = select(User).where(User.id == uid)
@@ -29,4 +29,4 @@ def delete_user(uid: int, db:Session):
     user = results.one()
     db.delete(user)
     db.commit()
-    return {"User deleted successfully"}
+    return {"msg":"User deleted successfully"}

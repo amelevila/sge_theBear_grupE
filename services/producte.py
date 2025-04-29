@@ -12,7 +12,7 @@ def afegir_producte(nom: str, preu: int, valoracio: int, db:Session):
     db.add(db_producte)
     db.commit()
     db.refresh(db_producte)
-    return {"Producte creat exitosament"}
+    return {"msg":"Producte creat exitosament"}
 
 def update_producte_preu(nom: str, preu: int, db:Session):
     statement = select(Producte).where(Producte.nom == nom)
@@ -21,7 +21,7 @@ def update_producte_preu(nom: str, preu: int, db:Session):
     producte.preu = preu
     db.add(producte)
     db.commit()
-    return {"Preu actualitzat exitosament"}
+    return {"msg":"Preu actualitzat exitosament"}
 
 def delete_producte(nom: str, db:Session):
     statement = select(Producte).where(Producte.nom == nom)
@@ -29,4 +29,4 @@ def delete_producte(nom: str, db:Session):
     producte = results.one()
     db.delete(producte)
     db.commit()
-    return {"Producte eliminat exitosament"}
+    return {"msg":"Producte eliminat exitosament"}

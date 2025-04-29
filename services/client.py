@@ -12,7 +12,7 @@ def afegir_client(nom: str, email: str, residencia: str, db:Session):
     db.add(db_client)
     db.commit()
     db.refresh(db_client)
-    return {"Client creat exitosament"}
+    return {"msg":"Client creat exitosament"}
 
 def update_client_email(nom: str, email: str, db:Session):
     statement = select(Client).where(Client.nom == nom)
@@ -21,7 +21,7 @@ def update_client_email(nom: str, email: str, db:Session):
     client.email = email
     db.add(client)
     db.commit()
-    return {"Email actualitzat exitosament"}
+    return {"msg":"Email actualitzat exitosament"}
 
 def delete_client(nom: str, db:Session):
     statement = select(Client).where(Client.nom == nom)
@@ -29,4 +29,4 @@ def delete_client(nom: str, db:Session):
     client = results.one()
     db.delete(client)
     db.commit()
-    return {"Client eliminat exitosament"}
+    return {"msg":"Client eliminat exitosament"}
