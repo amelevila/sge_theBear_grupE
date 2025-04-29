@@ -3,5 +3,5 @@ def reunio_schema(reunio) -> dict:
     return response
 
 def reunions_schema(reunions)-> list[dict]:
-    response = [reunions_schema(reunio) for reunio in reunions]
+    response = [reunio_schema(reunio) for reunio in reunions]
     return response
