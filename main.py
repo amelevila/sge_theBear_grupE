@@ -2,7 +2,7 @@ from typing import List
 from fastapi import FastAPI, Depends
 from sqlmodel import SQLModel, create_engine, Session
 from dotenv import load_dotenv
-from services import read, user, cost, client, producte, reunio, empleat, event, entrada, comunicacio
+from services import read, user, cost, client, producte, reunio, empleat, event, entrada, comunicacio, lloc, punt_de_venda
 from datetime import date
 
 import os
@@ -206,3 +206,51 @@ def update_comunicacio(plantilla: str, nova_activacio: str, db: Session = Depend
 @app.delete("/comunicacions/", response_model=dict)
 def delete_comunicacio(plantilla: str, db: Session = Depends(get_db)):
     return comunicacio.delete_comunicacio(plantilla, db)
+
+#Lloc
+
+@app.get("/lloc/", response_model = list[dict])
+def read_lloc(db: Session = Depends(get_db)):
+    result = lloc.llegir_lloc(db)
+    return result
+
+@app.post("/lloc/", response_model=dict)
+def create_lloc(id:int, num_taula: int, lliure:bool, db:Session = Depends(get_db)):
+    result = lloc.afegir_lloc(id, num_taula, lliure, db)
+    return result
+
+@app.put("/update_lloc/", response_model=dict)
+async def update_lliure_lloc(num_taula: int, lliure: bool, db: Session = Depends(get_db)):
+    result = lloc.update_lloc_lliure(num_taula, lliure, db)
+    return result
+
+@app.delete("/lloc/delete/", response_model=dict)
+async def del_lloc(num_taula: int, db: Session = Depends(get_db)):
+    result = lloc.delete_lloc(num_taula, db)
+    return result
+
+# Punts de venda
+
+@app.get("/punt_de_venda/", response_model=dict[list])
+def read_punt_de_venda(db:Session = Depends(get_db)):
+    result = punt_de_venda.llegir_punts_de_venda(db)
+    return result
+
+@app.post("/punt_de_venda/", response_model=list)
+def create_punt_de_venda(lloc:str, calendari:date, venta:str, db:Session = Depends(get_db)):
+    result = punt_de_venda.afegir_punts_de_venda(lloc, calendari, venta, db)
+    return result
+
+@app.put("/update_punt_de_venda/", response_model=list)
+async def update_venda_punt_de_venda(lloc: str, venda: str, db:Session = Depends(get_db)):
+    result = punt_de_venda.update_punt_de_venda_venda(lloc, venda, db)
+    return result
+
+@app.put("/update_punt_de_venda/", response_model=list)
+async def update_lloc_punt_de_venda(lloc: str, venda: str, db:Session = Depends(get_db)):
+    result = punt_de_venda.update_punt_de_venda_lloc(lloc, venda, db)
+    return result
+
+@app.delete("/punt_de_venda/delete/", response_model=dict)
+async def del_punt_de_venda(lloc:str, db:Session = Depends(get_db)):
+    return punt_de_venda.delete_punt_de_venda(lloc, db)
