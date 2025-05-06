@@ -2,7 +2,7 @@ from typing import List
 from fastapi import FastAPI, Depends
 from sqlmodel import SQLModel, create_engine, Session
 from dotenv import load_dotenv
-from services import read, user, cost, client, producte, reunio, lloc, punt_de_venda
+from services import read, user, cost, client, producte, reunio, empleat, event, entrada, comunicacio, lloc, punt_de_venda
 from datetime import date
 
 import os
@@ -132,6 +132,80 @@ async def update_duracio_reunio(assumpte: str, duracio: int, db:Session = Depend
 async def del_reunio(assumpte: str, db:Session = Depends(get_db)):
     result = reunio.delete_reunio(assumpte, db)
     return result
+
+#empleat
+@app.get("/empleats/", response_model=list[dict])
+def read_empleats(db: Session = Depends(get_db)):
+    return empleat.llegir_empleats(db)
+
+@app.post("/empleats/", response_model=dict)
+def create_empleat(nom: str, carrec: str, curriculum: str, habilitats: str, telefon: int, email: str, db: Session = Depends(get_db)):
+    return empleat.afegir_empleat(nom, carrec, curriculum, habilitats, telefon, email, db)
+
+@app.put("/empleats/", response_model=dict)
+def update_empleat(nom: str, email: str, db: Session = Depends(get_db)):
+    return empleat.update_empleat_email(nom, email, db)
+
+@app.delete("/empleats/", response_model=dict)
+def delete_empleat(nom: str, db: Session = Depends(get_db)):
+    return empleat.delete_empleat(nom, db)
+
+#event
+@app.get("/events/", response_model=list[dict])
+def read_events(db: Session = Depends(get_db)):
+    return event.llegir_events(db)
+
+@app.post("/events/", response_model=dict)
+def create_event(nou_event: str, reservats: str, anunciats: str, informes: str, data: str, db: Session = Depends(get_db)):
+    from datetime import datetime
+    parsed_date = datetime.strptime(data, "%Y-%m-%d").date()
+    return event.afegir_event(nou_event, reservats, anunciats, informes, parsed_date, db)
+
+@app.put("/events/", response_model=dict)
+def update_event(event_id: int, nova_data: str, db: Session = Depends(get_db)):
+    from datetime import datetime
+    parsed_date = datetime.strptime(nova_data, "%Y-%m-%d").date()
+    return event.update_event_data(event_id, parsed_date, db)
+
+@app.delete("/events/", response_model=dict)
+def delete_event(event_id: int, db: Session = Depends(get_db)):
+    return event.delete_event(event_id, db)
+
+#entrada
+@app.get("/entrades/", response_model=list[dict])
+def read_entrades(db: Session = Depends(get_db)):
+    return entrada.llegir_entrades(db)
+
+@app.post("/entrades/", response_model=dict)
+def create_entrada(producte: str, nom: str, preu: float, data_ventes: str, maxim_persones: int, db: Session = Depends(get_db)):
+    from datetime import datetime
+    parsed_date = datetime.strptime(data_ventes, "%Y-%m-%d").date()
+    return entrada.afegir_entrada(producte, nom, preu, parsed_date, maxim_persones, db)
+
+@app.put("/entrades/", response_model=dict)
+def update_preu(producte: str, nou_preu: float, db: Session = Depends(get_db)):
+    return entrada.update_entrada_preu(producte, nou_preu, db)
+
+@app.delete("/entrades/", response_model=dict)
+def delete_entrada(producte: str, db: Session = Depends(get_db)):
+    return entrada.delete_entrada(producte, db)
+
+#comunicació
+@app.get("/comunicacions/", response_model=list[dict])
+def read_comunicacions(db: Session = Depends(get_db)):
+    return comunicacio.llegir_comunicacions(db)
+
+@app.post("/comunicacions/", response_model=dict)
+def create_comunicacio(plantilla: str, unitat: int, activacio: str, db: Session = Depends(get_db)):
+    return comunicacio.afegir_comunicacio(plantilla, unitat, activacio, db)
+
+@app.put("/comunicacions/", response_model=dict)
+def update_comunicacio(plantilla: str, nova_activacio: str, db: Session = Depends(get_db)):
+    return comunicacio.update_comunicacio_activacio(plantilla, nova_activacio, db)
+
+@app.delete("/comunicacions/", response_model=dict)
+def delete_comunicacio(plantilla: str, db: Session = Depends(get_db)):
+    return comunicacio.delete_comunicacio(plantilla, db)
 
 #Lloc
 
