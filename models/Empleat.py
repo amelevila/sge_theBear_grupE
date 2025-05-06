@@ -6,4 +6,4 @@ class Empleat(SQLModel, table=True):
     curriculum: str
     habilitats: str
     telefon: int
-    correu: str
+    email: str
