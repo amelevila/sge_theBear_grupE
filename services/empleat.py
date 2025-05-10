@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from models.empleat import Empleat
+from models.Empleat import Empleat
 from schema.empleat_sch import empleats_schema
 
 def llegir_empleats(db: Session):
