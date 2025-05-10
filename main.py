@@ -2,7 +2,7 @@ from typing import List
 from fastapi import FastAPI, Depends
 from sqlmodel import SQLModel, create_engine, Session
 from dotenv import load_dotenv
-from services import read, user, cost, client, producte, reunio, empleat, event, entrada, comunicacio, lloc, punt_de_venda
+from services import read, user, cost, client, producte, reunio, empleat, event, entrada, comunicacio, lloc, punt_de_venda, encarrec, vista, torn, producte_compra, proveidor
 from datetime import date
 
 import os
@@ -254,3 +254,110 @@ async def update_lloc_punt_de_venda(lloc: str, venda: str, db:Session = Depends(
 @app.delete("/punt_de_venda/delete/", response_model=dict)
 async def del_punt_de_venda(lloc:str, db:Session = Depends(get_db)):
     return punt_de_venda.delete_punt_de_venda(lloc, db)
+
+#Encarrecs
+@app.get("/encarrecs/", response_model=list[dict])
+def read_encarrec(db: Session = Depends(get_db)):
+    result = encarrec.llegir_encarrecs(db)
+    return result
+
+@app.post("/encarrecs/", response_model=dict)
+def create_encarrec(nom: str, proveïdor: str, data_limit: date, data_recollida: date, db: Session = Depends(get_db)):
+    result = encarrec.afegir_encarrec(nom, proveïdor, data_limit, data_recollida, db)
+    return result
+
+@app.put("/update_encarrec/", response_model=dict)
+async def update_data_recollida_encarrec(nom: str, data_recollida: date, db: Session = Depends(get_db)):
+    result = encarrec.update_encarrec_data_recollida(nom, data_recollida, db)
+    return result
+
+@app.delete("/encarrec/delete/", response_model=dict)
+async def del_encarrec(nom: str, db: Session = Depends(get_db)):
+    result = encarrec.delete_encarrec(nom, db)
+    return result
+
+#Vista
+@app.get("/vistes/", response_model=list[dict])
+def read_vista(db: Session = Depends(get_db)):
+    result = vista.llegir_vistes(db)
+    return result
+
+@app.post("/vistes/", response_model=dict)
+def create_vista(nom: str, data: date, db: Session = Depends(get_db)):
+    result = vista.afegir_vista(nom, data, db)
+    return result
+
+@app.put("/update_vista/", response_model=dict)
+async def update_data_vista(nom: str, data: date, db: Session = Depends(get_db)):
+    result = vista.update_vista_data(nom, data, db)
+    return result
+
+@app.delete("/vista/delete/", response_model=dict)
+async def del_vista(nom: str, db: Session = Depends(get_db)):
+    result = vista.delete_vista(nom, db)
+    return result
+
+#Torn
+@app.get("/torns/", response_model=list[dict])
+def read_torn(db: Session = Depends(get_db)):
+    result = torn.llegir_torns(db)
+    return result
+
+@app.post("/torns/", response_model=dict)
+def create_torn(nom: str, recurs: str, data: date, minuts: int, db: Session = Depends(get_db)):
+    result = torn.afegir_torn(nom, recurs, data, minuts, db)
+    return result
+
+@app.put("/update_torn/", response_model=dict)
+async def update_minuts_torn(nom: str, minuts: int, db: Session = Depends(get_db)):
+    result = torn.update_torn_minuts(nom, minuts, db)
+    return result
+
+@app.delete("/torn/delete/", response_model=dict)
+async def del_torn(nom: str, db: Session = Depends(get_db)):
+    result = torn.delete_torn(nom, db)
+    return result
+
+
+#Producte_compra
+@app.get("/productes_compra/", response_model=list[dict])
+def read_producte_compra(db: Session = Depends(get_db)):
+    result = producte_compra.llegir_productes_compra(db)
+    return result
+
+@app.post("/productes_compra/", response_model=dict)
+def create_producte_compra(nom: str, tipus: str, preu: int, categoria: str, db: Session = Depends(get_db)):
+    result = producte_compra.afegir_producte_compra(nom, tipus, preu, categoria, db)
+    return result
+
+@app.put("/update_producte_compra/", response_model=dict)
+async def update_preu_producte_compra(nom: str, preu: int, db: Session = Depends(get_db)):
+    result = producte_compra.update_producte_compra_preu(nom, preu, db)
+    return result
+
+@app.delete("/producte_compra/delete/", response_model=dict)
+async def del_producte_compra(nom: str, db: Session = Depends(get_db)):
+    result = producte_compra.delete_producte_compra(nom, db)
+    return result
+
+#Proveidor
+@app.get("/proveidors/", response_model=list[dict])
+def read_proveidor(db: Session = Depends(get_db)):
+    result = proveidor.llegir_proveidors(db)
+    return result
+
+@app.post("/proveidors/", response_model=dict)
+def create_proveidor(nom: str, correu_electronic: str, direccio: str, telefon: str, db: Session = Depends(get_db)):
+    result = proveidor.afegir_proveidor(nom, correu_electronic, direccio, telefon, db)
+    return result
+
+@app.put("/update_proveidor/", response_model=dict)
+async def update_telefon_proveidor(nom: str, telefon: str, db: Session = Depends(get_db)):
+    result = proveidor.update_proveidor_telefon(nom, telefon, db)
+    return result
+
+@app.delete("/proveidor/delete/", response_model=dict)
+async def del_proveidor(nom: str, db: Session = Depends(get_db)):
+    result = proveidor.delete_proveidor(nom, db)
+    return result
+
