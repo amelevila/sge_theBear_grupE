@@ -241,11 +241,6 @@ def create_punt_de_venda(lloc:str, calendari:date, venta:str, db:Session = Depen
     return result
 
 @app.put("/update_punt_de_venda/", response_model=dict)
-async def update_venda_punt_de_venda(lloc: str, venda: str, db:Session = Depends(get_db)):
-    result = punt_de_venda.update_punt_de_venda_venda(lloc, venda, db)
-    return result
-
-@app.put("/update_punt_de_venda/", response_model=dict)
 async def update_lloc_punt_de_venda(lloc: str, venda: str, db:Session = Depends(get_db)):
     result = punt_de_venda.update_punt_de_venda_lloc(lloc, venda, db)
     return result
