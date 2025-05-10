@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from models.event import Event
+from models.Event import Event
 from schema.event_sch import events_schema
 from datetime import date
 

@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from models.comunicacio import Comunicacio
+from models.Comunicacio import Comunicacio
 from schema.comunicacio_sch import comunicacions_schema
 
 def llegir_comunicacions(db: Session):

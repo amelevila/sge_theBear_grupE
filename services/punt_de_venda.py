@@ -1,7 +1,7 @@
 from datetime import date
 from sqlmodel import Session, select
 from schema.punts_de_venda_sch import punts_de_venda_schema
-from models.Punts_de_venda import Punt_de_venda
+from models.Punt_de_venda import Punt_de_venda
 
 
 def llegir_punts_de_venda(db:Session):

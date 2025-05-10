@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from models.entrada import Entrada
+from models.Entrada import Entrada
 from schema.entrada_sch import entrades_schema
 from datetime import date
 
