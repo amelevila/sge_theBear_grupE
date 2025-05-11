@@ -56,8 +56,8 @@ def read_cost(db:Session = Depends(get_db)):
     return result
 
 @app.post("/costos/", response_model=dict)
-def create_cost(nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session = Depends(get_db)):
-    result = cost.afegir_cost(nom_client, comercial, venciment, nom_producte, db)
+def create_cost(numero: int, nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session = Depends(get_db)):
+    result = cost.afegir_cost(numero, nom_client, comercial, venciment, nom_producte, db)
     return result
 
 @app.put("/update_cost/", response_model= dict)
