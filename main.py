@@ -55,7 +55,7 @@ def read_cost(db:Session = Depends(get_db)):
     result = cost.llegir_costos(db)
     return result
 
-@app.post("/costos/", response_model=dict)
+@app.post("/cost/create/", response_model=dict)
 def create_cost(numero: int, nom_client: str, comercial: str, venciment: date, nom_producte: str, db:Session = Depends(get_db)):
     result = cost.afegir_cost(numero, nom_client, comercial, venciment, nom_producte, db)
     return result
@@ -76,7 +76,7 @@ def read_client(db:Session = Depends(get_db)):
     result = client.llegir_clients(db)
     return result
 
-@app.post("/clients/", response_model=dict)
+@app.post("/clients/create/", response_model=dict)
 def create_client(nom: str, email: str, residencia: str, db:Session = Depends(get_db)):
     result = client.afegir_client(nom, email, residencia, db)
     return result
@@ -97,7 +97,7 @@ def read_producte(db:Session = Depends(get_db)):
     result = producte.llegir_productes(db)
     return result
 
-@app.post("/productes/", response_model=dict)
+@app.post("/productes/create/", response_model=dict)
 def create_producte(nom: str, preu: int, valoracio: int, db:Session = Depends(get_db)):
     result = producte.afegir_producte(nom, preu, valoracio, db)
     return result
@@ -118,7 +118,7 @@ def read_reunio(db:Session = Depends(get_db)):
     result = reunio.llegir_reunions(db)
     return result
 
-@app.post("/reunions/", response_model=dict)
+@app.post("/reunions/create/", response_model=dict)
 def create_reunio(assumpte: str, organitzador: str, privacitat: str, data_inici: date, duracio: int, ubicacio: str, url: str, descripcio: str, db:Session = Depends(get_db)):
     result = reunio.afegir_reunio(assumpte, organitzador, privacitat, data_inici, duracio, ubicacio, url, descripcio, db)
     return result
