@@ -130,10 +130,9 @@ def read_events(db: Session = Depends(get_db)):
     return event.llegir_events(db)
 
 @app.post("/events/", response_model=dict)
-def create_event(nou_event: str, reservats: str, anunciats: str, informes: str, data: str, db: Session = Depends(get_db)):
-    from datetime import datetime
-    parsed_date = datetime.strptime(data, "%Y-%m-%d").date()
-    return event.afegir_event(nou_event, reservats, anunciats, informes, parsed_date, db)
+def create_event(nou_event: str, reservat: str, enunciat: str, informe: str, data: date, db: Session = Depends(get_db)):
+    result = event.afegir_event(nou_event, reservat, enunciat, informe, data, db)
+    return result
 
 @app.put("/events/", response_model=dict)
 def update_event(event_id: int, nova_data: str, db: Session = Depends(get_db)):
