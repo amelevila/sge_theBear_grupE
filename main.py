@@ -23,11 +23,6 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/root", response_model=List[dict])
-async def read_root():
-    result = read.registre()
-    return result
-
 #cost
 @app.get("/costos/", response_model= list[dict])
 def read_cost(db:Session = Depends(get_db)):
